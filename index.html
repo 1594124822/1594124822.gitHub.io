@@ -1,63 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人博客</title>
-    <!-- 引入外部CSS样式，实际项目中应链接到具体的CSS文件 -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+---
+layout: home-page
+---
+{% include calculate_relative_base.html %}
 
-<header>
-    <nav>
-        <ul>
-            <li><a href="#home">首页</a></li>
-            <li><a href="#about">关于我</a></li>
-            <li><a href="#articles">文章</a></li>
-            <li><a href="#contact">联系</a></li>
-        </ul>
-    </nav>
-</header>
-
-<main>
-    <section id="home">
-        <h1>欢迎来到我的个人博客</h1>
-        <p>这里记录着我对技术、生活和旅行的思考与感悟。</p>
-    </section>
-
-    <section id="articles">
-        <h2>最新文章</h2>
-        <!-- 假设文章列表由后端动态生成，这里简化展示 -->
-        <article>
-            <h3>文章标题</h3>
-            <p>文章摘要...</p>
-            <a href="#">阅读更多</a>
-        </article>
-        <!-- 重复上一个article标签结构以展示更多文章 -->
-    </section>
-
-    <section id="comments" class="comment-section">
-        <h2>评论区</h2>
-        <div class="comment">
-            <p><strong>匿名用户:</strong> 很棒的文章！学到了很多。</p>
-        </div>
-        <!-- 重复上一个.comment结构以展示更多评论 -->
-
-        <!-- 实现真实评论功能需后端处理和前端交互逻辑 -->
-        <form id="comment-form">
-            <label for="comment">发表评论:</label><br>
-            <textarea id="comment" rows="4" cols="50"></textarea><br>
-            <input type="submit" value="提交">
-        </form>
-    </section>
-</main>
-
-<footer>
-    <p>&copy; 2023 我的个人博客. All rights reserved.</p>
-</footer>
-
-<!-- 引入外部JavaScript文件，用于处理表单提交等动态功能 -->
-<script src="scripts.js"></script>
-</body>
-</html>
+<ol class="post-card-box clearfix">
+  {% for post in paginator.posts %}
+  {% include remove_double_slash.html %}
+  <li>
+    <div class="post-card">
+      <a href="{{ post_url }}" title="{{ post.title }}" class="post-card-image" style="background: url('{{ relativebase }}assets/img/{{ post.img }}') center no-repeat; background-size: cover;">
+      </a>
+      <div class="post-card-body">
+        <p class="post-card-title-and-meta">
+          
+          <a href="{{ post_url }}" class="post-card-link">
+          {{ post.title }}
+          </a>
+          {% include post_meta.html type="post-card-meta" date="none" %}
+        </p>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ol>
